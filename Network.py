@@ -1,3 +1,5 @@
+# Network.py
+
 import argparse
 import select
 import socket
@@ -26,11 +28,12 @@ class NetworkLayer:
     def __init__(self, role_S, server_S, port):
         if role_S == 'client':
             self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sleep(.1)
             self.conn.connect((server_S, port))
         
         elif role_S == 'server':
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.sock.bind(('127.0.0.1', port))
+            self.sock.bind(('', port))
             self.sock.listen(1)
             self.conn, addr = self.sock.accept()
         
@@ -117,3 +120,5 @@ if __name__ == '__main__':
         print(network.udt_receive())
         network.udt_send('MSG_FROM_SERVER')
         network.disconnect()
+
+# EOF
